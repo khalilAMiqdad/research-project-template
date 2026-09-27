@@ -1,0 +1,72 @@
+# Validation: structure, naming, sensitive data, secrets, large files, script syntax.
+# Required status check on main: "structure-and-security"
+name: Validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  structure-and-security:
+    name: structure-and-security
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout (full history, LFS pointers only)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Required files, folders and file naming
+        run: python tools/check_structure.py
+
+      - name: Sensitive files, personal-data patterns, microdata, large files
+        run: python tools/check_sensitive.py
+
+      - name: Secret scan of full Git history (Gitleaks)
+        env:
+          GITLEAKS_VERSION: "8.18.4"
+        run: |
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz gitleaks
+          ./gitleaks detect --source . --redact --verbose --exit-code 1
+
+      - name: Python scripts compile
+        run: python -m compileall -q 03_scripts tools
+
+      - name: YAML / CSV configuration files are valid
+        run: |
+          pip install --quiet pyyaml
+          python - <<'PY'
+          import csv, glob, sys, yaml
+          bad = []
+          for f in glob.glob("**/*.y*ml", recursive=True) + glob.glob(".github/**/*.y*ml", recursive=True):
+              try:
+                  yaml.safe_load(open(f, encoding="utf-8"))
+              except Exception as e:
+                  bad.append(f"{f}: {e}")
+          for f in ["03_scripts/02_cleaning/cleaning_rules.csv", "03_scripts/03_recoding/recode_map.csv",
+                    "03_scripts/04_weighting/weighting_targets.csv", "02_data/metadata/DATA_MANIFEST.csv",
+                    "02_data/data_dictionary/data_dictionary.csv"]:
+              rows = list(csv.reader(open(f, encoding="utf-8")))
+              widths = {len(r) for r in rows if r}
+              if len(widths) > 1:
+                  bad.append(f"{f}: rows have different numbers of columns {sorted(widths)}")
+          print("\n".join(bad) or "All YAML/CSV files valid")
+          sys.exit(1 if bad else 0)
+          PY

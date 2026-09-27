@@ -1,0 +1,52 @@
+name: "📊 Analysis Issue / مشكلة في التحليل"
+description: "Problem, question or error in an analysis, table, figure or result"
+title: "[Analysis] "
+labels: ["analysis", "review:statistics"]
+body:
+  - type: input
+    id: output
+    attributes:
+      label: "Affected output(s) / المخرجات المتأثرة"
+      placeholder: "04_analysis/tables/tab_xtab_trust_by_region.csv, report section 3.2"
+    validations:
+      required: true
+  - type: input
+    id: script
+    attributes:
+      label: "Script / stage / السكربت"
+      placeholder: "03_scripts/07_comparative_analysis/07_crosstabs.py"
+  - type: dropdown
+    id: type
+    attributes:
+      label: "Problem type / نوع المشكلة"
+      options:
+        - Wrong base / denominator
+        - Weighting not applied / wrong weight
+        - Margin of error / significance
+        - Result not reproducible
+        - Inconsistency between table, figure and text
+        - Deviation from analysis plan
+        - Interpretation question
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Expected vs observed / المتوقع مقابل الملاحظ"
+      description: "Aggregate numbers only."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: "How to reproduce / خطوات إعادة الإنتاج"
+      placeholder: "git checkout <commit>; python 03_scripts/run_pipeline.py --only 07"
+  - type: dropdown
+    id: reported
+    attributes:
+      label: "Already reported externally? / هل نُشرت النتيجة؟"
+      description: "If yes, a correction may require an erratum and a MINOR release."
+      options: ["No", "Yes - internal draft", "Yes - published"]
+    validations:
+      required: true

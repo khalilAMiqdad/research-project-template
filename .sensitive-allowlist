@@ -1,0 +1,4 @@
+# Paths (glob patterns) excluded from tools/check_sensitive.py.
+# Every line needs a justification comment and Project Lead + Data Manager approval (CODEOWNERS).
+# Example:
+# 07_outputs/publications/*_contacts_page.md   # public institutional e-mails only - DR-012

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🔒 Security or data incident (do NOT open a public issue)
+    url: https://github.com/[ORG_OR_USER]/[REPO_NAME]/blob/main/SECURITY.md
+    about: Report leaked data or secrets privately to the security contact, following SECURITY.md.
+  - name: 📘 How we work (CONTRIBUTING)
+    url: https://github.com/[ORG_OR_USER]/[REPO_NAME]/blob/main/CONTRIBUTING.md
+    about: Branches, commits, pull requests and reviews.

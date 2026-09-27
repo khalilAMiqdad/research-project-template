@@ -1,0 +1,67 @@
+name: "🗂️ Data Issue / مشكلة في البيانات"
+description: "Inconsistency, invalid code, outlier, duplicate, missing data or coding error found in the data"
+title: "[Data] "
+labels: ["data", "review:data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ⚠️ **Never paste rows of data, names, phone numbers or other identifiers.**
+        Refer to records only by pseudonymous `resp_id` and to files by name + dataset version.
+        لا تنسخ صفوفًا من البيانات هنا؛ استخدم المعرّف المستعار فقط.
+  - type: dropdown
+    id: stage
+    attributes:
+      label: "Data stage / مرحلة البيانات"
+      options: [raw, cleaned, processed, analysis_ready, published output]
+    validations:
+      required: true
+  - type: input
+    id: dataset
+    attributes:
+      label: "File and dataset version / الملف والإصدار"
+      placeholder: "e.g. [short]_cleaned_v1.0.csv"
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: "Problem type / نوع المشكلة"
+      options:
+        - Invalid / out-of-range code
+        - Inconsistency between variables
+        - Duplicate record
+        - Unexpected missing data
+        - Outlier
+        - Wrong label / coding in dictionary
+        - Skip-logic / routing error
+        - Suspected fieldwork quality problem
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: variables
+    attributes:
+      label: "Variable(s) / المتغيرات"
+      placeholder: "q12_trust_gov, age"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description and how it was found / الوصف وطريقة الاكتشاف"
+      description: "Include counts (n records affected) and the check or query used — not the data."
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "Proposed rule / correction / القاعدة المقترحة"
+      description: "Proposed cleaning rule (condition + action + rationale). The Data Manager decides."
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: "Confirmation / تأكيد"
+      options:
+        - label: "This issue contains no personal data or identifiers / لا تحتوي هذه الصفحة على بيانات شخصية"
+          required: true

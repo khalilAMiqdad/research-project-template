@@ -1,0 +1,8 @@
+# Pin exact versions after the first working setup:  pip freeze > requirements.lock.txt
+pandas>=2.1
+numpy>=1.26
+pyyaml>=6.0
+matplotlib>=3.8
+openpyxl>=3.1      # read/write .xlsx
+pyreadstat>=1.2    # read/write SPSS .sav and Stata .dta
+python-dotenv>=1.0

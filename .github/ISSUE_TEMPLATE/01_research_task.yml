@@ -1,0 +1,58 @@
+name: "📋 Research Task / مهمة بحثية"
+description: "A planned piece of research work (analysis, documentation, fieldwork, report...)"
+title: "[Task] "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Do not include participant-level data, names, contacts or secrets in issues.**
+        لا تضع أي بيانات شخصية أو كلمات مرور في هذه الصفحة.
+  - type: dropdown
+    id: work_package
+    attributes:
+      label: "Work package / مجال العمل"
+      options: [Protocol, Fieldwork, Data, Analysis, Reporting, Management, Documentation]
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: "Objective / الهدف"
+      description: "What must be achieved and why? Link protocol / analysis-plan section."
+    validations:
+      required: true
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: "Deliverables / المخرجات"
+      description: "Files or outputs expected (with paths following the naming convention)."
+      placeholder: "- 03_scripts/07_comparative_analysis/...\n- 04_analysis/tables/tab_xtab_..."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "Acceptance criteria / معايير القبول"
+      value: |
+        - [ ] ...
+        - [ ] Documentation and CHANGELOG updated
+        - [ ] Reviewed and merged via PR
+    validations:
+      required: true
+  - type: input
+    id: due
+    attributes:
+      label: "Due date / الموعد النهائي"
+      placeholder: "YYYY-MM-DD"
+  - type: dropdown
+    id: priority
+    attributes:
+      label: "Priority / الأولوية"
+      options: [P1-High, P2-Medium, P3-Low]
+  - type: dropdown
+    id: review
+    attributes:
+      label: "Review needed / نوع المراجعة المطلوبة"
+      multiple: true
+      options: [Data, Methodology, Statistical, Report, None]

@@ -1,0 +1,14 @@
+Copyright (c) [YEAR] [ORGANIZATION_NAME]. All rights reserved.
+
+This repository and its contents are confidential research materials of [ORGANIZATION_NAME]
+until formally released. No part may be copied, distributed or published without written
+permission of the Project Lead.
+
+------------------------------------------------------------------------------------------
+LICENCE DECISION REQUIRED BEFORE ANY PUBLIC RELEASE
+------------------------------------------------------------------------------------------
+Replace this file when the project is made public. Common choices for research projects:
+  * Code (03_scripts/, tools/):          MIT or Apache-2.0
+  * Documents, tables, figures, reports: CC BY 4.0
+  * De-identified datasets:              CC BY 4.0 or a data-use agreement
+Record the decision in 00_project_management/decisions/ and update CITATION.cff.

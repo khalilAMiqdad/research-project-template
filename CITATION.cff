@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use these materials, please cite them as below."
+title: "[PROJECT_NAME]"
+type: software
+version: "0.1.0"
+date-released: "2026-01-01"   # replace with the release date
+authors:
+  - family-names: "[FAMILY_NAME]"
+    given-names: "[GIVEN_NAME]"
+    affiliation: "[ORGANIZATION_NAME]"
+    # orcid: "https://orcid.org/0000-0000-0000-0000"
+repository-code: "https://github.com/[ORG_OR_USER]/[REPO_NAME]"
+abstract: "[SHORT_DESCRIPTION]"
+keywords:
+  - survey research
+  - reproducible research
+license: "LicenseRef-All-Rights-Reserved"

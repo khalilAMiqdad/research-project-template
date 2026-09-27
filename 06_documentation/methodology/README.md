@@ -1,0 +1,3 @@
+# methodology
+
+See [METHODOLOGICAL_NOTES.md](METHODOLOGICAL_NOTES.md).

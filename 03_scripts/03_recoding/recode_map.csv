@@ -1,0 +1,2 @@
+rule_id,active,variable,new_variable,from_value,to_value,rationale,issue,approved_by
+[RCD-001],no,[VARIABLE],[NEW_VARIABLE_OR_EMPTY],[FROM_CODE],[TO_CODE],[Why - reference ANALYSIS_PLAN.md],#[ISSUE],[ANALYSIS_LEAD]

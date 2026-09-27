@@ -1,0 +1,4 @@
+variable,label_en,label_ar,type,values,valid_min,valid_max,missing_codes,source,stage_created,pii,in_analysis,notes
+resp_id,Pseudonymous respondent ID,المعرّف المستعار للمشارك,string,,,,,System (02_clean.py),cleaned,none,yes,Created in cleaning; linking key stored only in restricted storage
+weight_final,Final analysis weight,الوزن النهائي للتحليل,numeric,,,,,System (04_weight.py),processed,none,yes,Normalised to sample size; method per ANALYSIS_PLAN.md section 8
+[VARIABLE_NAME],[English label],[التسمية بالعربية],[categorical|ordinal|binary|numeric|integer|string|date],[1=Label|2=Label],[MIN],[MAX],[98|99],[Q_ID in questionnaire vX.Y],[raw|cleaned|processed],[none|quasi|direct],[yes|no],[Notes]

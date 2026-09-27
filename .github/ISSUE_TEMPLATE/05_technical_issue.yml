@@ -1,0 +1,34 @@
+name: "🛠️ Technical Issue / مشكلة تقنية"
+description: "Git, GitHub, CI, environment, script error or tooling problem"
+title: "[Tech] "
+labels: ["technical"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Problem / المشكلة"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Steps to reproduce / خطوات إعادة المشكلة"
+      placeholder: "1. ...\n2. ..."
+  - type: textarea
+    id: error
+    attributes:
+      label: "Error message / رسالة الخطأ"
+      description: "Remove any paths, data values or tokens before pasting."
+      render: text
+  - type: input
+    id: env
+    attributes:
+      label: "Environment / البيئة"
+      placeholder: "Windows 11, Python 3.12, Git 2.45"
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: "Confirmation / تأكيد"
+      options:
+        - label: "The log/error above contains no data values, personal data or secrets"
+          required: true

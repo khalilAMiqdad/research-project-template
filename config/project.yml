@@ -1,0 +1,54 @@
+# =============================================================================
+# Pipeline configuration — [PROJECT_NAME]
+# No secrets here. Values marked REQUIRED must be set from the Research Protocol /
+# Analysis Plan before the corresponding stage can run; the scripts stop otherwise.
+# =============================================================================
+
+project:
+  name: "[PROJECT_NAME]"
+  short_name: "[PROJECT_SHORT_NAME]"     # used in data file names, e.g. "hhs2026"
+
+data:
+  # Environment variable holding the absolute path to secure storage (see config/.env.example)
+  root_env_var: DATA_ROOT
+  # Version of the data being produced by this run (bump per VERSIONING.md)
+  dataset_version: "0.1"
+  # Raw input files, relative to $DATA_ROOT/raw/. Supported: .csv .xlsx .sav .dta
+  raw_files:
+    - "[PROJECT_SHORT_NAME]_raw_[YYYYMMDD].csv"      # REQUIRED
+  # Pseudonymous respondent identifier (must be unique per record)
+  id_variable: "resp_id"
+  # Variable holding the original platform ID or any direct identifier used to build resp_id.
+  # It is moved to $DATA_ROOT/restricted/ (linking key) and removed from cleaned data.
+  source_id_variable: null
+  output_format: "csv"                    # csv | parquet | sav | dta
+
+weighting:
+  # none | design | raking   — REQUIRED decision, see ANALYSIS_PLAN.md §8
+  method: "none"
+  base_weight_variable: null              # e.g. inclusion-probability-based design weight
+  inclusion_probability_variable: null    # for method: design
+  targets_file: "03_scripts/04_weighting/weighting_targets.csv"   # for method: raking
+  raking_variables: []                    # e.g. ["region", "sex", "age_group"]
+  max_iterations: 100
+  tolerance: 1.0e-6
+  trim_min: null                          # optional weight trimming bounds
+  trim_max: null
+
+analysis:
+  weight_variable: "weight_final"
+  confidence_level: null                  # REQUIRED, e.g. per ANALYSIS_PLAN.md (commonly 0.95)
+  design_effect: null                     # REQUIRED for margins of error; 1.0 = simple random sampling
+  min_cell_size: null                     # REQUIRED disclosure-control threshold for published cells
+  descriptive_variables: []               # variables for frequency tables
+  crosstabs:                              # list of [row_variable, column_variable]
+    []
+  figure_variables: []                    # variables for bar charts
+
+paths:
+  dictionary_csv: "02_data/data_dictionary/data_dictionary.csv"
+  manifest_csv: "02_data/metadata/DATA_MANIFEST.csv"
+  qc_reports: "04_analysis/qc_reports"
+  tables: "04_analysis/tables"
+  figures: "04_analysis/figures"
+  statistical_outputs: "04_analysis/statistical_outputs"

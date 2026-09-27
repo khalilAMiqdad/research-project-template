@@ -1,0 +1,63 @@
+# =============================================================================
+# CODEOWNERS — who must approve changes to which part of the repository.
+# The LAST matching pattern wins. Owners must have Write access or higher.
+# Replace the placeholders (or run tools/setup_github.sh, which does it for you):
+#   @PROJECT_LEAD  @DATA_MANAGER  @METHODOLOGY_LEAD  @ANALYSIS_LEAD  @FIELDWORK_COORDINATOR  @REPORT_LEAD
+# With a GitHub Organization, prefer teams, e.g. @ORG/data-team.
+# =============================================================================
+
+# Default owner for anything not listed below
+*                                           @PROJECT_LEAD
+
+# ---- Documentation --------------------------------------------------------
+/README.md                                  @PROJECT_LEAD
+/README.ar.md                               @PROJECT_LEAD
+/CONTRIBUTING.md                            @PROJECT_LEAD
+/CHANGELOG.md                               @PROJECT_LEAD
+/06_documentation/                          @PROJECT_LEAD
+/06_documentation/methodology/              @METHODOLOGY_LEAD
+/06_documentation/analysis_documentation/   @DATA_MANAGER @ANALYSIS_LEAD
+/06_documentation/data_management/          @DATA_MANAGER
+
+# ---- Methodology ----------------------------------------------------------
+/01_protocol/                               @METHODOLOGY_LEAD
+/01_protocol/ANALYSIS_PLAN.md               @METHODOLOGY_LEAD @ANALYSIS_LEAD
+/01_protocol/fieldwork/                     @FIELDWORK_COORDINATOR @METHODOLOGY_LEAD
+/01_protocol/questionnaire/                 @METHODOLOGY_LEAD @FIELDWORK_COORDINATOR
+/01_protocol/ethics/                        @PROJECT_LEAD
+
+# ---- Data -----------------------------------------------------------------
+/02_data/                                   @DATA_MANAGER
+/02_data/analysis_ready/approved_deid/      @DATA_MANAGER @PROJECT_LEAD
+
+# ---- Data-processing code (stages 01-05) ----------------------------------
+/03_scripts/                                @DATA_MANAGER
+/03_scripts/01_validation/                  @DATA_MANAGER
+/03_scripts/02_cleaning/                    @DATA_MANAGER
+/03_scripts/03_recoding/                    @DATA_MANAGER @ANALYSIS_LEAD
+/03_scripts/04_weighting/                   @METHODOLOGY_LEAD @DATA_MANAGER
+/03_scripts/05_analysis_dataset/            @DATA_MANAGER
+
+# ---- Statistical analysis (stages 06-08) ----------------------------------
+/03_scripts/06_descriptive_analysis/        @ANALYSIS_LEAD
+/03_scripts/07_comparative_analysis/        @ANALYSIS_LEAD
+/03_scripts/08_visualization/               @ANALYSIS_LEAD
+/03_scripts/_lib/stats_utils.py             @ANALYSIS_LEAD
+/04_analysis/                               @ANALYSIS_LEAD
+
+# ---- Reports & outputs ----------------------------------------------------
+/05_reports/                                @REPORT_LEAD
+/05_reports/final/                          @REPORT_LEAD @PROJECT_LEAD
+/07_outputs/                                @PROJECT_LEAD @REPORT_LEAD
+
+# ---- Programming / infrastructure / security ------------------------------
+/.github/                                   @PROJECT_LEAD
+/tools/                                     @PROJECT_LEAD
+/config/                                    @PROJECT_LEAD @DATA_MANAGER
+/config/project.yml                         @METHODOLOGY_LEAD @DATA_MANAGER
+/.gitignore                                 @PROJECT_LEAD @DATA_MANAGER
+/.gitattributes                             @PROJECT_LEAD @DATA_MANAGER
+/SECURITY.md                                @PROJECT_LEAD
+/DATA_SECURITY.md                           @PROJECT_LEAD @DATA_MANAGER
+/00_project_management/                     @PROJECT_LEAD
+/.sensitive-allowlist                       @PROJECT_LEAD @DATA_MANAGER

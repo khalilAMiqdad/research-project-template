@@ -1,0 +1,5 @@
+rule_id,active,variable,condition,action,value,rationale,issue,approved_by
+[CLN-001],no,*,,trim_whitespace,,Remove leading/trailing spaces in all text variables,#[ISSUE],[DATA_MANAGER]
+[CLN-002],no,[VARIABLE],[VARIABLE] == '[CODE]',set_missing,,[Why this value is treated as missing],#[ISSUE],[DATA_MANAGER]
+[CLN-003],no,[VARIABLE],[CONDITION],replace,[NEW_VALUE],[Why the correction is justified - cite back-check / source],#[ISSUE],[DATA_MANAGER]
+[CLN-004],no,*,[CONDITION e.g. consent != '1'],drop_record,,[Exclusion rule from ANALYSIS_PLAN.md section 11],#[ISSUE],[METHODOLOGY_LEAD]

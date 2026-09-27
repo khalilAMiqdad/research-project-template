@@ -1,0 +1,49 @@
+# Release: on a version tag, run strict checks and publish a GitHub Release
+# whose notes are the matching CHANGELOG section.
+name: Release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Strict checks (no unfilled placeholders in core documents)
+        run: |
+          python tools/check_structure.py
+          python tools/check_sensitive.py
+          python tools/check_docs.py --strict
+
+      - name: Extract release notes from CHANGELOG.md
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          python - <<'PY'
+          import os, re, sys
+          version = os.environ["TAG"].lstrip("v")
+          text = open("CHANGELOG.md", encoding="utf-8").read()
+          m = re.search(rf"^## \[{re.escape(version)}\].*?$(.*?)(?=^## \[|\Z)", text, re.S | re.M)
+          if not m:
+              sys.exit(f"CHANGELOG.md has no section for [{version}]")
+          open("release_notes.md", "w", encoding="utf-8").write(m.group(0).strip() + "\n")
+          PY
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: gh release create "$TAG" --title "$TAG" --notes-file release_notes.md --verify-tag

@@ -1,0 +1,10 @@
+# Link checker configuration (documentation-check workflow)
+exclude = [
+  '\[.*\]',               # unfilled placeholders such as [ORG_OR_USER]
+  '^mailto:',
+  'github\.com/\[',
+]
+exclude_path = ["99_archive", ".venv", "node_modules"]
+accept = [200, 206, 429]
+max_retries = 2
+timeout = 20

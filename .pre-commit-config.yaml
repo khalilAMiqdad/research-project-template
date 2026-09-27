@@ -1,0 +1,33 @@
+# Local safety net — install once:  pip install pre-commit && pre-commit install
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-added-large-files
+        args: ["--maxkb=5120"]
+      - id: detect-private-key
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+        exclude: '\.md$'
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout          # removes notebook outputs that may contain microdata
+  - repo: local
+    hooks:
+      - id: sensitive-files
+        name: Block sensitive files, PII patterns and forbidden names
+        entry: python tools/check_sensitive.py --files
+        language: system
+        pass_filenames: true
+      - id: naming-convention
+        name: File naming convention
+        entry: python tools/check_structure.py --names-only --files
+        language: system
+        pass_filenames: true

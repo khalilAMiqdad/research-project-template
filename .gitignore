@@ -1,0 +1,137 @@
+# =============================================================================
+#  .gitignore — [PROJECT_NAME]
+#  Principle: data and secrets NEVER enter Git. See DATA_SECURITY.md.
+#  To share a file that is blocked here, open an Issue and ask the Data Manager.
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# 1. DATA STAGES — ignore everything, then re-allow documentation/metadata only
+# ---------------------------------------------------------------------------
+/02_data/**
+!/02_data/**/
+!/02_data/**/README.md
+!/02_data/**/.gitkeep
+!/02_data/metadata/DATA_MANIFEST.csv
+!/02_data/metadata/*.md
+!/02_data/data_dictionary/DATA_DICTIONARY.md
+!/02_data/data_dictionary/data_dictionary.csv
+# Approved de-identified datasets (tracked with Git LFS, see DATA_SECURITY.md §4)
+!/02_data/analysis_ready/approved_deid/*
+
+# ---------------------------------------------------------------------------
+# 2. MICRODATA FORMATS anywhere else (allowed only in 07_outputs/datasets/)
+# ---------------------------------------------------------------------------
+*.sav
+*.zsav
+*.por
+*.dta
+*.sas7bdat
+*.xpt
+*.rds
+*.RData
+*.rda
+*.Rhistory
+*.feather
+*.parquet
+*.h5
+*.hdf5
+*.db
+*.sqlite
+*.sqlite3
+*.mdb
+*.accdb
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+!/07_outputs/datasets/**
+!/02_data/analysis_ready/approved_deid/*
+
+# Raw exports and field material that must never be committed
+*_raw_*.csv
+*_raw_*.xlsx
+**/raw_export*/
+**/field_media/
+*.m4a
+*.mp3
+*.wav
+*.amr
+*.3gp
+*.mp4
+*.mov
+*.kml
+*.kmz
+*.gpx
+*.shp
+*.geojson
+
+# ---------------------------------------------------------------------------
+# 3. SECRETS AND CREDENTIALS
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!config/.env.example
+.Renviron
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.kdbx
+*.secret
+*.secrets
+*secret*.json
+*secret*.yml
+*secret*.yaml
+*credential*
+*password*
+*passwd*
+*.token
+id_rsa*
+id_ed25519*
+*.ppk
+service-account*.json
+client_secret*.json
+token.json
+.netrc
+.pgpass
+
+# ---------------------------------------------------------------------------
+# 4. TOOLS, EDITORS, OPERATING SYSTEMS
+# ---------------------------------------------------------------------------
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+# R
+.Rproj.user/
+.Rdata
+renv/library/
+renv/staging/
+# Stata / SPSS temporary + logs with possible microdata
+*.smcl
+*.log
+*.spv
+*.spo
+# Office lock / temp files
+~$*
+*.tmp
+*.bak
+*.swp
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+# IDEs
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+# Local pipeline run logs (can contain row-level messages)
+/logs/

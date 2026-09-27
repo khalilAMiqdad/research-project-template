@@ -1,0 +1,67 @@
+# Documentation: completeness, Markdown style, internal links, CHANGELOG discipline.
+# Required status check on main: "docs-check"
+name: Documentation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 6 * * 1"          # Mondays 06:00 UTC: also check external links
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  docs-check:
+    name: docs-check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Documentation completeness (sections, dictionary, placeholders)
+        run: python tools/check_docs.py
+
+      - name: Markdown lint
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          globs: "**/*.md"
+
+      - name: Internal links (files and folders referenced in docs exist)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --config .lychee.toml --offline --no-progress "./**/*.md"
+          fail: true
+
+      - name: CHANGELOG updated for substantive changes
+        if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'no-changelog')
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          git diff --name-only "origin/${BASE_REF}...HEAD" > changed.txt
+          if grep -Eq '^(01_protocol|02_data|03_scripts|04_analysis|05_reports/final|07_outputs|config)/' changed.txt \
+             && ! grep -qx 'CHANGELOG.md' changed.txt; then
+            echo "::error::This PR changes protocol, data, scripts, analysis or outputs but not CHANGELOG.md. Add an entry under [Unreleased] or apply the 'no-changelog' label with a reason."
+            exit 1
+          fi
+          echo "CHANGELOG discipline OK"
+
+  external-links:
+    name: external-links (weekly, non-blocking)
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: --config .lychee.toml --no-progress "./**/*.md"
+          fail: false
